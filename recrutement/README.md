@@ -13,8 +13,7 @@ Construit à partir de `small-business/hiring-screener` (règles d'évaluation �
 | `reply-drafter` | Les emails aux candidats dans la voix de l'entreprise, depuis les modèles validés, groupés par lot, validation nominative avant envoi | « rédige les relances », « envoie les refus », « convoque » |
 | `live-itw-prep` | Un kit d'entretien par candidat : ce que la vidéo a déjà prouvé, ce qui reste en tiret, les questions pour le trancher, la grille de notes ; consigne de démo pour les formateurs | « prépare l'entretien », « questions pour », « kit entretien » |
 | `pipeline-report` | L'état du recrutement en une page : funnel, ce qui attend une décision du recruteur, ce qui glisse, hygiène RGPD, les trois actions de la semaine | « point recrutement », « qu'est-ce qui bloque », « rapport » |
-
-À venir : `job-post` (annonce + grille par poste, à partir de `positions/_template.md`).
+| `job-post` | Le dossier d'ouverture d'un poste : fiche `positions/`, grille pondérée fixée **avant** la première candidature, annonce conforme (L1132-1, fourchette, mention IA/RGPD), structure du tableur | « on recrute un », « rédige l'annonce », « fiche de poste » |
 
 ## Comment il travaille
 
@@ -31,11 +30,11 @@ claude plugin marketplace add iamthemediagit/knowledge-work-plugins
 claude plugin install recrutement@knowledge-work-plugins
 ```
 
-Puis connecter Gmail, Google Drive et Google Calendar (voir `CONNECTORS.md`). Sans connecteur, chaque skill fonctionne avec un export `.xlsx` du tableur et les emails collés ; les brouillons sont alors le livrable.
+Puis connecter Gmail, Google Drive et Google Calendar (voir `CONNECTORS.md`). Outils à installer sur la machine du recruteur (ffmpeg, Whisper) : `TOOLS.md`. Sans connecteur, chaque skill fonctionne avec un export `.xlsx` du tableur et les emails collés ; les brouillons sont alors le livrable.
 
 ## Transcription des vidéos
 
-Claude ne regarde pas de vidéo. La transcription se fait en local (ffmpeg + Whisper sur Mac Apple Silicon, moins d'une minute par vidéo, rien ne quitte la machine). Procédure dans `skills/video-review/reference/transcription.md`.
+Claude ne regarde pas de vidéo. La transcription se fait en local (ffmpeg + Whisper sur Mac Apple Silicon, moins d'une minute par vidéo, rien ne quitte la machine). Installation dans `TOOLS.md`, procédure dans `skills/video-review/reference/transcription.md`.
 
 ## Adapter à un autre client
 
@@ -51,6 +50,7 @@ recrutement/
 ├── .claude-plugin/plugin.json
 ├── .mcp.json                      # Gmail, Google Drive, Google Calendar
 ├── CONNECTORS.md
+├── TOOLS.md                       # ffmpeg, Whisper, vérifications
 ├── positions/                     # une fiche par poste
 │   ├── _template.md
 │   ├── assistant-executif-maars.md
@@ -69,5 +69,7 @@ recrutement/
     │   └── reference/ templates-fr.md
     ├── live-itw-prep/
     │   └── reference/ question-bank.md
-    └── pipeline-report/
+    ├── pipeline-report/
+    └── job-post/
+        └── reference/ annonce.md
 ```

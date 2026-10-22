@@ -16,12 +16,7 @@ Si le recruteur n'a pas la machine pour, l'alternative acceptable est un service
 
 ## Procédure locale (macOS, Apple Silicon)
 
-Prérequis, une fois :
-
-```bash
-brew install ffmpeg
-uv tool install mlx-whisper        # ou : brew install whisper-cpp
-```
+Prérequis et installation détaillée (Homebrew, choix whisper.cpp vs mlx-whisper, téléchargement du modèle) dans `../../../TOOLS.md`. En résumé : `brew install ffmpeg whisper-cpp` + un modèle `ggml-large-v3.bin`, ou `uv tool install mlx-whisper`.
 
 Pour un dossier de vidéos téléchargé depuis `~~drive` dans un dossier vide dédié :
 
@@ -39,7 +34,7 @@ for w in *.wav; do
 done
 ```
 
-Avec `whisper.cpp` : `whisper-cli -m ggml-large-v3.bin -l fr -otxt "$w"`.
+Avec `whisper.cpp` : `whisper-cli -m ~/.whisper/ggml-large-v3.bin -l fr -otxt -osrt -of "${w%.wav}" "$w"`.
 
 Chaque `.txt` fait 350 à 500 mots pour 3 minutes. En dessous de 150, vérifier : audio coupé, langue mal détectée, silence long au début.
 
