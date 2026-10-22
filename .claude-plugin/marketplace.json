@@ -124,6 +124,12 @@
       "description": "Streamline people operations — recruiting, onboarding, performance reviews, compensation analysis, and policy guidance. Maintain compliance and keep your team running smoothly."
     },
     {
+      "name": "recrutement",
+      "displayName": "Recrutement",
+      "source": "./recrutement",
+      "description": "Recrutement pour PME française sans ATS : suivi des candidatures dans un Google Sheet, relances horodatées, évaluation des vidéos de présentation sur grille pondérée avec citations, réponses aux candidats. Décision humaine à chaque étape, conforme RGPD et AI Act."
+    },
+    {
       "name": "design",
       "displayName": "Design",
       "source": "./design",

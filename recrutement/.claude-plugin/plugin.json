@@ -1,0 +1,18 @@
+{
+  "name": "recrutement",
+  "displayName": "Recrutement",
+  "version": "0.1.0",
+  "description": "Pipeline de recrutement pour PME française : suivi des candidatures dans un Google Sheet, relances, évaluation des vidéos de présentation sur grille pondérée, réponses aux candidats. Décision humaine à chaque étape, conforme RGPD et AI Act.",
+  "author": {
+    "name": "Franck C."
+  },
+  "keywords": [
+    "recrutement",
+    "hiring",
+    "hr",
+    "france",
+    "video-screening",
+    "google-sheets",
+    "gmail"
+  ]
+}
