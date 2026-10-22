@@ -1,6 +1,6 @@
 # Outillage
 
-Ce qu'il faut sur le Mac du recruteur pour que le plugin tourne en entier. Prévu pour quelqu'un qui n'ouvre pas le Terminal tous les jours : deux commandes à copier-coller, une seule fois.
+Ce qu'il faut sur le Mac du recruteur pour que le plugin tourne en entier. **Le plus simple est de laisser Claude installer : voir `INSTALL.md`.** Ce document détaille ce qui est installé et comment dépanner.
 
 ---
 

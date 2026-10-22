@@ -25,6 +25,8 @@ Construit à partir de `small-business/hiring-screener` (règles d'évaluation �
 
 ## Installation
 
+**Pour le recruteur** : suivre `INSTALL.md` (ouvrir Claude Code dans l'app Claude, coller un prompt, Claude installe tout). **Pour un développeur** :
+
 ```bash
 claude plugin marketplace add iamthemediagit/knowledge-work-plugins
 claude plugin install recrutement@knowledge-work-plugins
@@ -50,7 +52,9 @@ recrutement/
 ├── .claude-plugin/plugin.json
 ├── .mcp.json                      # Gmail, Google Drive, Google Calendar
 ├── CONNECTORS.md
-├── TOOLS.md                       # installation côté Mac, dépannage
+├── INSTALL.md                     # guide + prompt d'installation pour le recruteur
+├── TOOLS.md                       # détail de l'outillage, dépannage
+├── assets/                        # captures pour INSTALL.md
 ├── scripts/
 │   ├── setup.sh                   # installe ffmpeg, whisper.cpp, le modèle, la commande transcrire
 │   └── transcrire.sh              # transcrit un dossier de vidéos en .txt + .srt
