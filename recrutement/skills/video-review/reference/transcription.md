@@ -16,7 +16,7 @@ Si le recruteur n'a pas la machine pour, l'alternative acceptable est un service
 
 ## Procédure locale (macOS, Apple Silicon)
 
-Prérequis et installation détaillée (Homebrew, choix whisper.cpp vs mlx-whisper, téléchargement du modèle) dans `../../../TOOLS.md`. En résumé : `brew install ffmpeg whisper-cpp` + un modèle `ggml-large-v3.bin`, ou `uv tool install mlx-whisper`.
+**Pour le recruteur** : installation en une fois avec `scripts/setup.sh`, puis `transcrire <dossier>` à chaque vague. Tout est dans `../../../TOOLS.md`. Ce qui suit est le détail de ce que fait la commande, pour qui veut l'adapter.
 
 Pour un dossier de vidéos téléchargé depuis `~~drive` dans un dossier vide dédié :
 

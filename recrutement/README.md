@@ -34,7 +34,7 @@ Puis connecter Gmail, Google Drive et Google Calendar (voir `CONNECTORS.md`). Ou
 
 ## Transcription des vidéos
 
-Claude ne regarde pas de vidéo. La transcription se fait en local (ffmpeg + Whisper sur Mac Apple Silicon, moins d'une minute par vidéo, rien ne quitte la machine). Installation dans `TOOLS.md`, procédure dans `skills/video-review/reference/transcription.md`.
+Claude ne regarde pas de vidéo. La transcription se fait en local sur le Mac du recruteur (ffmpeg + Whisper, moins d'une minute par vidéo, rien ne quitte la machine). Installation en une commande avec `scripts/setup.sh`, puis `transcrire <dossier>` à chaque vague. Installation dans `TOOLS.md`, procédure dans `skills/video-review/reference/transcription.md`.
 
 ## Adapter à un autre client
 
@@ -50,7 +50,10 @@ recrutement/
 ├── .claude-plugin/plugin.json
 ├── .mcp.json                      # Gmail, Google Drive, Google Calendar
 ├── CONNECTORS.md
-├── TOOLS.md                       # ffmpeg, Whisper, vérifications
+├── TOOLS.md                       # installation côté Mac, dépannage
+├── scripts/
+│   ├── setup.sh                   # installe ffmpeg, whisper.cpp, le modèle, la commande transcrire
+│   └── transcrire.sh              # transcrit un dossier de vidéos en .txt + .srt
 ├── positions/                     # une fiche par poste
 │   ├── _template.md
 │   ├── assistant-executif-maars.md

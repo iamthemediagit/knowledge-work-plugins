@@ -1,108 +1,76 @@
 # Outillage
 
-Ce qu'il faut installer pour que le plugin tourne en entier. Tout le reste (tableur, mail, agenda) passe par les connecteurs de `CONNECTORS.md`.
+Ce qu'il faut sur le Mac du recruteur pour que le plugin tourne en entier. Prévu pour quelqu'un qui n'ouvre pas le Terminal tous les jours : deux commandes à copier-coller, une seule fois.
 
 ---
 
-## Côté Claude
+## 1. Côté Claude
 
-| Outil | Pourquoi | Installation |
+| Quoi | Pourquoi | Comment |
 |---|---|---|
-| **Claude Cowork** (app desktop) ou **Claude Code** | Exécute le plugin | [claude.com](https://claude.com) ; Claude Code : `npm install -g @anthropic-ai/claude-code` |
-| Connecteurs Gmail, Google Drive, Google Calendar | `~~email`, `~~drive`, `~~tracker`, `~~calendar` | Activés depuis Cowork (Connecteurs) ou lus dans `.mcp.json` par Claude Code ; authentification Google au premier appel |
-| Le plugin | | `claude plugin marketplace add iamthemediagit/knowledge-work-plugins` puis `claude plugin install recrutement@knowledge-work-plugins` |
+| **Claude Cowork** (app Mac) | Fait tourner le plugin | Télécharger sur [claude.com](https://claude.com), se connecter avec le compte maars |
+| Connecteurs **Gmail**, **Google Drive**, **Google Calendar** | Lire les réponses des candidats, le tableur et les vidéos ; proposer des créneaux | Dans Cowork : Paramètres → Connecteurs → connecter les trois avec le compte Google de maars |
+| Le plugin **Recrutement** | | Depuis Cowork : installer depuis la marketplace `iamthemediagit/knowledge-work-plugins`. En Claude Code : `claude plugin marketplace add iamthemediagit/knowledge-work-plugins` puis `claude plugin install recrutement@knowledge-work-plugins` |
 
-Sans connecteur, le plugin fonctionne avec un export `.xlsx` du tableur déposé dans la conversation et des emails collés.
-
----
-
-## Côté machine du recruteur : transcription locale
-
-Nécessaire pour `video-review` uniquement. Les vidéos ne quittent pas la machine (`shared/personal-data.md`).
-
-### Prérequis
-
-Mac Apple Silicon (M1 à M4) avec [Homebrew](https://brew.sh). Sur une autre machine, voir « Alternative » plus bas.
-
-### Installation, une fois
-
-```bash
-# Homebrew si absent
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Extraction audio
-brew install ffmpeg
-
-# Transcription : option A, whisper.cpp (binaire natif, Homebrew)
-brew install whisper-cpp
-```
-
-`whisper-cpp` installe la commande `whisper-cli` mais **pas de modèle**. Télécharger le modèle français une fois (environ 3 Go pour `large-v3`, 1,5 Go pour `medium`, suffisant pour une voix seule face caméra) :
-
-```bash
-mkdir -p ~/.whisper && cd ~/.whisper
-curl -L -o ggml-large-v3.bin \
-  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin
-```
-
-### Option B : mlx-whisper (Python, optimisé Apple Silicon)
-
-Pour qui a déjà `uv` (stack Python). Plus rapide sur M3/M4, télécharge le modèle tout seul au premier lancement.
-
-```bash
-brew install uv            # si absent
-uv tool install mlx-whisper
-```
-
-Les deux options donnent le même résultat ; l'option A ne dépend pas de Python, l'option B est plus rapide. Une seule suffit.
-
-### Utilisation
-
-Dans un dossier vide où les vidéos ont été téléchargées depuis Drive :
-
-```bash
-# 1. Audio mono 16 kHz
-for f in *.mp4 *.mov *.MOV; do
-  [ -e "$f" ] || continue
-  ffmpeg -nostdin -loglevel error -i "$f" -vn -ac 1 -ar 16000 "${f%.*}.wav"
-done
-
-# 2a. whisper.cpp
-for w in *.wav; do
-  whisper-cli -m ~/.whisper/ggml-large-v3.bin -l fr -otxt -osrt -of "${w%.wav}" "$w"
-done
-
-# 2b. ou mlx-whisper
-for w in *.wav; do
-  mlx_whisper "$w" --model mlx-community/whisper-large-v3-mlx --language fr \
-    --output-format all --output-dir .
-done
-
-# 3. Nettoyage : les .wav ne servent plus
-rm -f *.wav
-```
-
-Résultat : un `.txt` (texte) et un `.srt` (horodaté, pour citer « 1:12–1:40 ») par vidéo, à remonter dans le même dossier Drive que les vidéos. Une vidéo de 3 minutes se transcrit en 20 à 60 secondes sur M4.
-
-### Alternative sans Mac Apple Silicon
-
-Sur Windows ou Linux : `whisper.cpp` se compile ou s'installe via les paquets de la distribution ; `faster-whisper` (Python, `uv tool install faster-whisper`) est l'équivalent de mlx-whisper. Sans machine assez puissante, un service cloud de transcription est possible **si** son contrat de sous-traitance couvre le RGPD et si la mention d'information des candidats le prévoit ; décision du recruteur, à écrire dans `shared/personal-data.md` du client.
+Sans connecteur, tout fonctionne quand même en déposant un export `.xlsx` du tableur et en collant les emails dans la conversation ; les brouillons sont alors à envoyer à la main.
 
 ---
 
-## Ce qu'on n'installe pas
+## 2. Côté Mac : transcrire les vidéos sans qu'elles quittent la machine
 
-- Aucun outil d'analyse d'image, de voix ou d'émotion. Hors grille et interdit en contexte professionnel par l'AI Act (`shared/fair-screening.md`).
-- Aucun ATS. Le tableur suffit à cette échelle ; en ajouter un, c'est un deuxième système à tenir à jour.
+Nécessaire pour `video-review`. Claude ne regarde pas les vidéos ; il lit un texte. Ce texte est produit **sur le Mac**, par un modèle de reconnaissance vocale local (Whisper). Aucune vidéo de candidat n'est envoyée à un service externe (`shared/personal-data.md`).
+
+Un Mac Studio ou n'importe quel Mac Apple Silicon (M1 à M4) fait ça en 20 à 60 secondes par vidéo de 3 minutes.
+
+### Installation, une fois (10 minutes, dont le téléchargement)
+
+1. Ouvrir **Terminal** (Cmd + Espace, taper `Terminal`, Entrée).
+2. Copier-coller cette ligne et appuyer sur Entrée :
+
+   ```bash
+   bash "$(find ~ -path '*recrutement/scripts/setup.sh' -print -quit 2>/dev/null)"
+   ```
+
+   Si la ligne ne trouve pas le script (plugin installé ailleurs que dans le dossier personnel), glisser le fichier `scripts/setup.sh` dans la fenêtre du Terminal après avoir tapé `bash ` (avec un espace), puis Entrée.
+
+3. Le script installe, dans l'ordre : Homebrew (le gestionnaire d'installation du Mac, s'il n'est pas déjà là ; il demande le mot de passe de session une fois), `ffmpeg`, `whisper.cpp`, le modèle de langue (3 Go, une seule fois), et la commande `transcrire`. Chaque étape affiche une coche verte. Relancer le script ne casse rien : ce qui est déjà fait est sauté.
+4. Fermer le Terminal et le rouvrir.
+
+### Utilisation, à chaque vague de vidéos
+
+1. Télécharger les vidéos depuis le dossier Drive des candidats dans un dossier du Mac, par exemple `Téléchargements/videos-candidats`. Un dossier dédié, rien d'autre dedans.
+2. Dans Terminal :
+
+   ```bash
+   transcrire ~/Downloads/videos-candidats
+   ```
+
+3. Pour chaque vidéo apparaît une ligne `✓ 412 mots → Prénom Nom.txt, Prénom Nom.srt`. Un `⚠ transcription courte` signale une vidéo à vérifier (son coupé, silence). Les vidéos déjà transcrites sont sautées.
+4. Remonter les fichiers `.txt` et `.srt` dans le **même dossier Drive** que les vidéos. Supprimer le dossier local.
+5. Dans Claude : « évalue les vidéos reçues ». `video-review` lit les transcriptions depuis Drive.
+
+Le `.srt` sert à citer avec un repère temporel (« 1:12–1:40 ») : le recruteur ouvre la vidéo au bon moment au lieu de la regarder en entier.
+
+### Si quelque chose bloque
+
+| Message | Cause | Faire |
+|---|---|---|
+| `command not found: transcrire` | Terminal pas rouvert après l'installation | Fermer et rouvrir Terminal, ou taper `source ~/.zshrc` |
+| `ffmpeg manquant` / `whisper-cli manquant` | Installation incomplète | Relancer `setup.sh` |
+| `Modèle introuvable` | Téléchargement interrompu | Relancer `setup.sh` ; il reprend le téléchargement |
+| `⚠ transcription courte` | Son absent ou vidéo tronquée | Ouvrir la vidéo ; si le son est bon, relancer avec `transcrire <dossier> --medium` après avoir supprimé le `.txt` |
+| Très lent (plusieurs minutes par vidéo) | Mac Intel, ou autre tâche lourde en cours | Utiliser `--medium` (modèle plus léger, à télécharger une fois : commande affichée par le script) |
 
 ---
 
-## Vérifier que tout est en place
+## 3. Ce qu'on n'installe pas
 
-```bash
-ffmpeg -version | head -1
-whisper-cli --help 2>&1 | head -1   # ou : mlx_whisper --help | head -1
-ls -lh ~/.whisper/                  # le modèle, si option A
-```
+- **Aucun outil d'analyse d'image, de voix ou d'émotion.** Hors grille, et interdit en contexte professionnel par l'AI Act (`shared/fair-screening.md`). Le plugin travaille sur le texte.
+- **Aucun ATS.** Le Google Sheet suffit à cette échelle ; un deuxième système serait un deuxième tableau à tenir à jour.
+- **Aucun service de transcription en ligne**, sauf décision explicite du recruteur avec un sous-traitant couvert par le RGPD et une mention dans l'information des candidats.
 
-Puis, dans Claude : « où on en est ? » doit lire le tableur ; « évalue cette transcription » avec un `.txt` déposé doit produire des notes avec citations.
+---
+
+## 4. Pour un développeur
+
+Les scripts sont dans `scripts/` : `setup.sh` (idempotent, Homebrew + ffmpeg + whisper-cpp + modèle + lien dans `~/.local/bin`) et `transcrire.sh` (ffmpeg → wav mono 16 kHz → `whisper-cli -l fr -otxt -osrt`, nettoyage des wav). Alternative plus rapide sur M3/M4 pour qui a `uv` : `uv tool install mlx-whisper`, puis `mlx_whisper <wav> --model mlx-community/whisper-large-v3-mlx --language fr --output-format all`. Sous Linux/Windows : `whisper.cpp` compilé ou `faster-whisper`.
