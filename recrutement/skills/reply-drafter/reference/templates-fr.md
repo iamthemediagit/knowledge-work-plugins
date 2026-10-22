@@ -178,3 +178,49 @@ Quand un candidat demande l'accès, la rectification ou la suppression de ses do
 > Bien cordialement,
 >
 > L'équipe maars
+
+---
+
+## Variantes freelance (coachs IA) — nouvelles, à valider
+
+Pour la fiche `coach-ia-maars.md`. Même voix ; on remplace « poste en CDI » par « missions », « prétentions salariales » par « TJM », « prise de poste » par « disponibilités ».
+
+### `complement-apres-video` — variante freelance
+
+> Bonjour [Prénom],
+>
+> Un grand merci pour votre vidéo et pour l'intérêt que vous portez à maars.
+>
+> Afin de poursuivre, pourriez-vous svp nous préciser :
+>
+> 1. Votre TJM souhaité (HT, par jour d'animation), en indiquant si la préparation est incluse ;
+> 2. Votre statut de facturation (micro-entreprise, société, portage) ;
+> 3. Vos disponibilités sur le trimestre à venir et les régions où vous pouvez intervenir en présentiel.
+>
+> Au plaisir de poursuivre nos échanges.
+>
+> Bien cordialement,
+>
+> L'équipe maars
+
+### `convocation-entretien` — variante démo pédagogique
+
+Remplacer le point « À préparer » par :
+
+> - **À préparer** : une démonstration de 15 minutes. Vous ouvrez un atelier devant [N] personnes qui n'ont jamais utilisé [outil] ; nous jouons les participants. Pas de support imposé : ce qui nous intéresse, c'est ce que vous faites faire, pas ce que vous montrez.
+
+### `bienvenue-vivier` — nouveau
+
+> Bonjour [Prénom],
+>
+> Nous avons le plaisir de vous confirmer votre intégration au vivier de formateurs maars.
+>
+> Concrètement : nous vous proposerons des missions en fonction des dates et des régions que vous nous avez indiquées ; vous restez libre d'accepter ou non chacune d'elles. La première se fera en binôme avec un formateur maars.
+>
+> Vous recevrez d'ici [Date] : le contrat-cadre de prestation, l'accès à la plateforme maars et aux supports de la méthode Compass, et une invitation à [prochain temps d'équipe].
+>
+> Bienvenue, et à très vite.
+>
+> Bien cordialement,
+>
+> L'équipe maars

@@ -11,8 +11,10 @@ Construit à partir de `small-business/hiring-screener` (règles d'évaluation �
 | `relance-tracker` | Le tableur à jour : vidéos reçues, réponses lues dans Gmail, écarts dossier/tableur, listes de relances horodatées | « où on en est », « qui a répondu », « mets à jour le tableau » |
 | `video-review` | Une note par critère **avec citation** depuis la transcription, une bande (entretien / peut-être / non / non évaluable), proposition d'écriture dans les colonnes de notation | « évalue les vidéos », « shortlist », « qui on retient » |
 | `reply-drafter` | Les emails aux candidats dans la voix de l'entreprise, depuis les modèles validés, groupés par lot, validation nominative avant envoi | « rédige les relances », « envoie les refus », « convoque » |
+| `live-itw-prep` | Un kit d'entretien par candidat : ce que la vidéo a déjà prouvé, ce qui reste en tiret, les questions pour le trancher, la grille de notes ; consigne de démo pour les formateurs | « prépare l'entretien », « questions pour », « kit entretien » |
+| `pipeline-report` | L'état du recrutement en une page : funnel, ce qui attend une décision du recruteur, ce qui glisse, hygiène RGPD, les trois actions de la semaine | « point recrutement », « qu'est-ce qui bloque », « rapport » |
 
-À venir : `live-itw-prep` (questions d'entretien ciblées sur ce que la vidéo n'a pas montré), `job-post` (annonce + grille par poste), `pipeline-report` (l'onglet Pilotage, lu et commenté).
+À venir : `job-post` (annonce + grille par poste, à partir de `positions/_template.md`).
 
 ## Comment il travaille
 
@@ -52,7 +54,7 @@ recrutement/
 ├── positions/                     # une fiche par poste
 │   ├── _template.md
 │   ├── assistant-executif-maars.md
-│   └── coach-ia-maars.md          # brouillon
+│   └── coach-ia-maars.md          # freelance, démo pédagogique
 ├── shared/                        # règles communes à tous les skills
 │   ├── tracker-schema.md
 │   ├── fair-screening.md          # L1132-1, AI Act, critères bloquants
@@ -63,6 +65,9 @@ recrutement/
     ├── relance-tracker/
     ├── video-review/
     │   └── reference/ transcription.md, scoring.md
-    └── reply-drafter/
-        └── reference/ templates-fr.md
+    ├── reply-drafter/
+    │   └── reference/ templates-fr.md
+    ├── live-itw-prep/
+    │   └── reference/ question-bank.md
+    └── pipeline-report/
 ```
